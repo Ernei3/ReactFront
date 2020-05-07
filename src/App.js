@@ -5,6 +5,7 @@ import {
     Link
 } from 'react-router-dom';
 import Categories from './Categories'
+import Subcategories from './Subcategories'
 
 import './App.css';
 
@@ -15,8 +16,12 @@ function App() {
                 <li>
                     <Link to="/categories">Categories</Link>
                 </li>
+                <li>
+                    <Link to="/subcategories">Subcategories</Link>
+                </li>
             </ul>
             <Route path="/categories" component={Categories}/>
+            <Route path="/subcategories" component={Subcategories}/>
         </div>
     </Router>
 }
