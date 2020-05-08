@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 
-class Subcategories extends Component {
+class SubByCat extends Component {
 
     constructor() {
         super();
         this.state = {
             subcategories: [],
-            categories: [],
+            categoryName: "",
         };
     }
 
     async componentDidMount() {
-        var url1 = "http://localhost:9000/subcategoriesJson"
+
+        const { catId } = this.props.match.params;
+
+        var url1 = `http://localhost:9000/subByCatJson/${catId}`
         const subResponse = await fetch(url1, {
             mode: 'cors',
             headers:{
@@ -34,25 +37,25 @@ class Subcategories extends Component {
         const subJson = await subResponse.json();
         const catJson = await catResponse.json();
 
-        this.setState({ subcategories: subJson, categories: catJson });
+        this.setState({ subcategories: subJson, categoryName: catJson.find( ({ id }) => id.toString() === catId.toString() ).name });
 
 
     }
 
     render() {
-
         return (
             <div className="subcategories">
+                <span className="categoryTitle">{this.state.categoryName}</span>
                 {this.state.subcategories.map(sub => (
-                <div key={sub.id}>
-                    <a href={'/products/'+sub.id}>
-                        {sub.name} {this.state.categories.find( ({ id }) => id === sub.category ).name}
-;                    </a>
-                </div>
+                    <div key={sub.id}>
+                        <a href={'/products/'+sub.id}>
+                            <span className="subcategoryName"> {sub.name}</span>
+                        </a>
+                    </div>
                 ))}
             </div>
         )
     }
 }
 
-export default Subcategories;
+export default SubByCat;
