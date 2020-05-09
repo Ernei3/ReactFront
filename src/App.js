@@ -11,6 +11,9 @@ import './App.css';
 import SubByCat from "./Subcategories/SubByCat";
 import Products from "./Products/Products";
 import ProductsBySub from "./Products/ProductsBySub";
+import ProductDetails from "./Products/ProductDetails";
+import ReviewsByProd from "./Reviews/ReviewsByProd";
+import AddReviewMenu from "./Reviews/AddReviewMenu";
 
 function App() {
     return <Router>
@@ -33,6 +36,9 @@ function App() {
             <Route path="/subcategory/:catId" component={SubByCat}/>
             <Route path="/allProducts" component={Products}/>
             <Route path="/products/:subId" component={ProductsBySub}/>
+            <Route path="/product/:id" component={ProductDetails}/>
+            <Route path="/reviews/:prodId" component={ReviewsByProd}/>
+            <Route path="/addReview/:prodId" component={AddReviewMenu}/>
         </div>
     </Router>
 }
