@@ -46,7 +46,7 @@ class ProductsBySub extends Component {
     render() {
         return (
             <div className="products">
-                <span className="subcategoryTitle">{this.state.subcategoryName}</span>
+                <div className="subcategoryTitle">{this.state.subcategoryName}</div>
                 {this.state.products.map(prod => (
                     <div key={prod.id}>
                         <span className="productName"> {prod.name} </span>

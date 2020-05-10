@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class AddReviewMenu extends Component {
     constructor() {
@@ -12,7 +12,7 @@ class AddReviewMenu extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
-        var url = `http://localhost:9000/addReview/${prodId}`;
+        let url = `http://localhost:9000/addReview/${prodId}`;
 
         fetch(url, {
             method: 'POST',

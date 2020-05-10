@@ -38,7 +38,8 @@ class ProductDetails extends Component {
                     <div className="soloProductName"> {this.state.product.name} </div>
                     <div className="soloProductPrice"> {this.state.product.price} $ </div>
                     <div className="soloProductDescription"> {this.state.product.description} </div>
-                    <a href={'/reviews/'+this.state.product.id}>Reviews</a>
+                    <div className="addToWishLink"><a href={'/addToWishlist/'+this.state.product.id}>Add to Wishlist</a></div>
+                    <div className="reviewsLink"><a href={'/reviews/'+this.state.product.id}>Reviews</a></div>
                 </div>
             </div>
         )

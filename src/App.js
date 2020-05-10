@@ -14,6 +14,9 @@ import ProductsBySub from "./Products/ProductsBySub";
 import ProductDetails from "./Products/ProductDetails";
 import ReviewsByProd from "./Reviews/ReviewsByProd";
 import AddReviewMenu from "./Reviews/AddReviewMenu";
+import LetIntoWishlist from "./Wishlist/LetIntoWishlist";
+import WishlistByUser from "./Wishlist/WishlistByUser";
+import AddToWishlist from "./Wishlist/AddToWishlist";
 
 function App() {
     return <Router>
@@ -29,6 +32,9 @@ function App() {
                     <li>
                         <Link to="/allProducts">Products</Link>
                     </li>
+                    <li>
+                        <Link to="/enterWishlist">Wishlist</Link>
+                    </li>
                 </ul>
             </nav>
             <Route path="/categories" component={Categories}/>
@@ -39,6 +45,9 @@ function App() {
             <Route path="/product/:id" component={ProductDetails}/>
             <Route path="/reviews/:prodId" component={ReviewsByProd}/>
             <Route path="/addReview/:prodId" component={AddReviewMenu}/>
+            <Route path="/enterWishlist" component={LetIntoWishlist}/>
+            <Route path="/wishlist/:userId" component={WishlistByUser}/>
+            <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
         </div>
     </Router>
 }
