@@ -17,6 +17,9 @@ import AddReviewMenu from "./Reviews/AddReviewMenu";
 import LetIntoWishlist from "./Wishlist/LetIntoWishlist";
 import WishlistByUser from "./Wishlist/WishlistByUser";
 import AddToWishlist from "./Wishlist/AddToWishlist";
+import LetIntoBasket from "./Basket/LetIntoBasket";
+import BasketByUser from "./Basket/BasketByUser";
+import AddToBasket from "./Basket/AddToBasket";
 
 function App() {
     return <Router>
@@ -35,6 +38,9 @@ function App() {
                     <li>
                         <Link to="/enterWishlist">Wishlist</Link>
                     </li>
+                    <li>
+                        <Link to="/enterBasket">Basket</Link>
+                    </li>
                 </ul>
             </nav>
             <Route path="/categories" component={Categories}/>
@@ -48,6 +54,9 @@ function App() {
             <Route path="/enterWishlist" component={LetIntoWishlist}/>
             <Route path="/wishlist/:userId" component={WishlistByUser}/>
             <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
+            <Route path="/enterBasket" component={LetIntoBasket}/>
+            <Route path="/basket/:userId" component={BasketByUser}/>
+            <Route path="/addToBasket/:prodId" component={AddToBasket}/>
         </div>
     </Router>
 }
