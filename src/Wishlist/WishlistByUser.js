@@ -11,7 +11,8 @@ class WishlistByUser extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClickRemove.bind(this);
+        this.handleClick = this.handleClickMove.bind(this);
     }
 
     async componentDidMount() {
@@ -52,7 +53,28 @@ class WishlistByUser extends Component {
         ReactDOM.findDOMNode(this.refs[subId]).click()
     }
 
-    handleClick(wish) {
+    async handleClickMove(wish) {
+
+        let url1 = `http://localhost:9000/addToBasketJson`;
+
+        await fetch(url1, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(wish),
+        });
+
+        let url2 = `http://localhost:9000/removeFromWishlistJson`;
+
+        await fetch(url2, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(wish),
+        });
+        window.location.reload();
+
+    }
+
+    handleClickRemove(wish) {
 
         let url = `http://localhost:9000/removeFromWishlistJson`;
 
@@ -107,7 +129,8 @@ class WishlistByUser extends Component {
                             <input name="product" id="product" value={wish.product} type="hidden" />
                             <input type="submit" value="Update" ref={"submit"+wish.id} style={{display: 'none'}}/>
                         </form>
-                            <input type="submit" value="Remove" ref={"delete"+wish.id} onClick={() => this.handleClick(wish)}/>
+                            <input type="submit" value="Move to Basket" ref={"delete"+wish.id} onClick={() => this.handleClickMove(wish)}/>
+                            <input type="submit" value="Remove" ref={"delete"+wish.id} onClick={() => this.handleClickRemove(wish)}/>
                     </div>
                 ))}
             </div>

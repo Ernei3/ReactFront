@@ -12,11 +12,22 @@ class AddReviewMenu extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
+        let object = {
+            "id": Number(0),
+            "title": data.get('title'),
+            "content": data.get('content'),
+            "product": Number(data.get('product'))
+        };
+
+
+
+
         let url = `http://localhost:9000/addReview/${prodId}`;
 
         fetch(url, {
             method: 'POST',
-            body: data,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(object),
         });
 
         this.props.history.push('/reviews/'+prodId);
