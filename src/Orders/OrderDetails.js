@@ -26,7 +26,7 @@ class OrderDetails extends Component {
             },
             method: 'GET',
         })
-        let url2 = "http://localhost:9000/categoriesJson"
+        let url2 = `http://localhost:9000/orderedProductsJson/${ordId}`
         const catResponse = await fetch(url2, {
             mode: 'cors',
             headers:{
@@ -52,11 +52,11 @@ class OrderDetails extends Component {
                 <div className="orderStatus">Status: {this.state.order.status}</div>
                 <div className="orderAddress">Sent to: {this.state.order.address}</div>
                 <div className="orderProducts">Ordered products:</div>
-                {this.state.orderedProducts.map(sub => (
-                    <div key={sub.id}>
-                        <a href={'/products/'+sub.id}>
-                            <span className="subcategoryName"> {sub.name}</span>
-                        </a>
+                {this.state.orderedProducts.map(op => (
+                    <div key={op.id}>
+                        <span className="orderedProductName"> {op.name} </span>
+                        <span className="orderedProductPrice"> {op.price} $ </span>
+                        <span className="orderedProductQuantity"> Quantity: {op.quantity} </span>
                     </div>
                 ))}
             </div>

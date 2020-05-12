@@ -64,7 +64,7 @@ class CheckOut extends Component {
             "address": 0
         }
 
-        var url1 = `http://localhost:9000/addOrderJson`
+        let url1 = `http://localhost:9000/addOrderJson`
         const ordResponse = await fetch(url1, {
             mode: 'cors',
             headers:{
@@ -75,27 +75,47 @@ class CheckOut extends Component {
             method: 'POST',
             body: JSON.stringify(object),
         })
-        const ordJson = await ordResponse.json();
-        this.props.history.push('/orders/'+ordJson.user);
+        const ordJson = await ordResponse.json()
+
+        let url2 = `http://localhost:9000/addToOrderJson`
+
+        await fetch(url2, {
+            mode: 'cors',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+            },
+            method: 'POST',
+            body: JSON.stringify(ordJson),
+        })
+
+        this.props.history.push('/addAddress/'+ordJson.id);
 
     }
 
     render() {
 
-        return (
-            <div className="ordersByUser">
-                <div className="checkOutTitle">Check Out</div>
-                {this.state.basket.map(bask => (
-                    <div key={bask.id}>
-                        <span className="prodOfBaskName"> {this.state.products.find( ({ id }) => id === bask.product ).name} </span>
-                        <span className="prodOfBaskPrice"> {this.state.products.find( ({ id }) => id === bask.product ).price} $</span>
-                        <span className="prodOfBaskPrice"> Quantity: {bask.quantity}</span>
-                    </div>
-                ))}
-                <div className="priceSum">{this.state.priceSum}</div>
-                <input type="submit" value="Buying" onClick={this.handleClick}/>
-            </div>
-        )
+        if(this.state.priceSum > 0){
+            return (
+                <div className="checkOut">
+                    <div className="checkOutTitle">Check Out</div>
+                    {this.state.basket.map(bask => (
+                        <div key={bask.id}>
+                            <span className="prodOfBaskName"> {this.state.products.find( ({ id }) => id === bask.product ).name} </span>
+                            <span className="prodOfBaskPrice"> {this.state.products.find( ({ id }) => id === bask.product ).price} $</span>
+                            <span className="prodOfBaskPrice"> Quantity: {bask.quantity}</span>
+                        </div>
+                    ))}
+                    <div className="priceSum">{this.state.priceSum} $</div>
+                    <input type="submit" value="Buying" onClick={this.handleClick}/>
+                </div>
+            )
+        }else{
+            return (
+                <div className="checkOut">Your basket is empty!</div>
+            )
+        }
     }
 }
 

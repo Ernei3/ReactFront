@@ -50,25 +50,26 @@ function App() {
                     </li>
                 </ul>
             </nav>
-            <Route path="/categories" component={Categories}/>
-            <Route path="/subcategories" component={Subcategories}/>
-            <Route path="/subcategory/:catId" component={SubByCat}/>
-            <Route path="/allProducts" component={Products}/>
-            <Route path="/products/:subId" component={ProductsBySub}/>
-            <Route path="/product/:id" component={ProductDetails}/>
-            <Route path="/reviews/:prodId" component={ReviewsByProd}/>
-            <Route path="/addReview/:prodId" component={AddReviewMenu}/>
-            <Route path="/enterWishlist" component={LetIntoWishlist}/>
-            <Route path="/wishlist/:userId" component={WishlistByUser}/>
-            <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
-            <Route path="/enterBasket" component={LetIntoBasket}/>
-            <Route path="/basket/:userId" component={BasketByUser}/>
-            <Route path="/addToBasket/:prodId" component={AddToBasket}/>
-            <Route path="/enterOrders" component={LetIntoOrders}/>
-            <Route path="/orders/:userId" component={OrdersByUser}/>
-            <Route path="/order/:ordId" component={OrderDetails}/>
-            <Route path="/checkOut/:userId" component={CheckOut}/>
         </div>
+        <Route path="/categories" component={Categories}/>
+        <Route path="/subcategories" component={Subcategories}/>
+        <Route path="/subcategory/:catId" component={SubByCat}/>
+        <Route path="/allProducts" component={Products}/>
+        <Route path="/products/:subId" component={ProductsBySub}/>
+        <Route path="/product/:id" component={ProductDetails}/>
+        <Route path="/reviews/:prodId" component={ReviewsByProd}/>
+        <Route path="/addReview/:prodId" component={AddReviewMenu}/>
+        <Route path="/enterWishlist" component={LetIntoWishlist}/>
+        <Route path="/wishlist/:userId" component={WishlistByUser}/>
+        <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
+        <Route path="/enterBasket" component={LetIntoBasket}/>
+        <Route path="/basket/:userId" component={BasketByUser}/>
+        <Route path="/addToBasket/:prodId" component={AddToBasket}/>
+        <Route path="/enterOrders" component={LetIntoOrders}/>
+        <Route path="/orders/:userId" component={OrdersByUser}/>
+        <Route path="/order/:ordId" component={OrderDetails}/>
+        <Route path="/checkOut/:userId" component={CheckOut}/>
+
     </Router>
 }
 
