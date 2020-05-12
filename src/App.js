@@ -20,6 +20,10 @@ import AddToWishlist from "./Wishlist/AddToWishlist";
 import LetIntoBasket from "./Basket/LetIntoBasket";
 import BasketByUser from "./Basket/BasketByUser";
 import AddToBasket from "./Basket/AddToBasket";
+import LetIntoOrders from "./Orders/LetIntoOrders";
+import OrdersByUser from "./Orders/OrdersByUser";
+import OrderDetails from "./Orders/OrderDetails";
+import CheckOut from "./Orders/CheckOut";
 
 function App() {
     return <Router>
@@ -41,6 +45,9 @@ function App() {
                     <li>
                         <Link to="/enterBasket">Basket</Link>
                     </li>
+                    <li>
+                        <Link to="/enterOrders">Orders</Link>
+                    </li>
                 </ul>
             </nav>
             <Route path="/categories" component={Categories}/>
@@ -57,6 +64,10 @@ function App() {
             <Route path="/enterBasket" component={LetIntoBasket}/>
             <Route path="/basket/:userId" component={BasketByUser}/>
             <Route path="/addToBasket/:prodId" component={AddToBasket}/>
+            <Route path="/enterOrders" component={LetIntoOrders}/>
+            <Route path="/orders/:userId" component={OrdersByUser}/>
+            <Route path="/order/:ordId" component={OrderDetails}/>
+            <Route path="/checkOut/:userId" component={CheckOut}/>
         </div>
     </Router>
 }

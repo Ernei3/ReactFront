@@ -26,9 +26,8 @@ class AddToBasket extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(object),
-        });
+        }).then(this.props.history.push('/basket/'+data.get('user')))
 
-        this.props.history.push('/basket/'+data.get('user'));
 
     }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 
-class LetIntoBasket extends Component {
+class LetIntoOrders extends Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,24 +13,23 @@ class LetIntoBasket extends Component {
         let userId = event.target.userId.value;
 
 
-        this.props.history.push('/basket/'+userId);
+        this.props.history.push('/orders/'+userId);
 
     }
 
     render() {
-
         return (
-            <div className="letIntoBasket">
+            <div className="letIntoOrder">
                 <form onSubmit={this.handleSubmit}>
 
                     <label htmlFor="userId">User Id:</label>
                     <input id="userId" name="userId" type="number"/>
 
-                    <button>Go to Basket</button>
+                    <button>Go to Orders</button>
                 </form>
             </div>
         )
     }
 }
 
-export default withRouter(LetIntoBasket);
+export default withRouter(LetIntoOrders);
