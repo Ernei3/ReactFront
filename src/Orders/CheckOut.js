@@ -6,7 +6,6 @@ class CheckOut extends Component {
     constructor() {
         super();
         this.state = {
-            order: "",
             basket: [],
             products: [],
             priceSum: 0,
@@ -15,6 +14,46 @@ class CheckOut extends Component {
     }
 
     async componentDidMount() {
+
+        const { userId } = this.props.match.params;
+
+        let url1 = `http://localhost:9000/basketJson/${userId}`
+        const baskResponse = await fetch(url1, {
+            mode: 'cors',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+            },
+            method: 'GET',
+        })
+
+        let url2 = "http://localhost:9000/productsJson"
+        const prodResponse = await fetch(url2, {
+            mode: 'cors',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+            },
+            method: 'GET',
+        })
+
+        const baskJson = await baskResponse.json();
+        const prodJson = await prodResponse.json();
+
+        let sum = 0;
+        baskJson.forEach(calcPrice);
+
+        function calcPrice(item) {
+            sum += item.quantity*prodJson.find( ({ id }) => id === item.product ).price;
+        }
+
+        this.setState({basket: baskJson, products: prodJson, priceSum: sum });
+
+    }
+
+    async handleClick() {
 
         const { userId } = this.props.match.params;
 
@@ -36,48 +75,8 @@ class CheckOut extends Component {
             method: 'POST',
             body: JSON.stringify(object),
         })
-
-
-        var url2 = `http://localhost:9000/basketJson/${userId}`
-        const baskResponse = await fetch(url2, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'GET',
-        })
-
-        var url3 = "http://localhost:9000/productsJson"
-        const prodResponse = await fetch(url3, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'GET',
-        })
-
         const ordJson = await ordResponse.json();
-        const baskJson = await baskResponse.json();
-        const prodJson = await prodResponse.json();
-
-        let sum = 0;
-        baskJson.forEach(calcPrice);
-
-        function calcPrice(item) {
-            sum += item.quantity*prodJson.find( ({ id }) => id === item.product ).price;
-        }
-
-        this.setState({ order: ordJson, basket: baskJson, products: prodJson, priceSum: sum });
-
-    }
-
-    handleClick() {
-
-        this.props.history.push('/orders/'+this.state.order.user);
+        this.props.history.push('/orders/'+ordJson.user);
 
     }
 
