@@ -38,9 +38,21 @@ class OrderDetails extends Component {
             method: 'GET',
         })
 
+        let url3 = `http://localhost:9000/paymentJson/${ordId}`
+        const payResponse = await fetch(url3, {
+            mode: 'cors',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+            },
+            method: 'GET',
+        })
+
         const ordJson = await ordResponse.json();
         const prodJson = await prodResponse.json();
-        this.setState({ order: ordJson, orderedProducts: prodJson});
+        const payJson = await payResponse.json();
+        this.setState({ order: ordJson, orderedProducts: prodJson, orderPayment: payJson});
 
         if(ordJson.address === 0){
 
@@ -55,8 +67,8 @@ class OrderDetails extends Component {
             this.setState({ orderAddress: handleZero});
         }else{
 
-            let url3 = `http://localhost:9000/orderAddressJson/${ordJson.address}`
-            const adResponse = await fetch(url3, {
+            let url4 = `http://localhost:9000/orderAddressJson/${ordJson.address}`
+            const adResponse = await fetch(url4, {
                 mode: 'cors',
                 headers:{
                     'Accept': 'application/json',
@@ -87,6 +99,14 @@ class OrderDetails extends Component {
                         <span className="orderedProductName"> {op.name} </span>
                         <span className="orderedProductPrice"> {op.price} $ </span>
                         <span className="orderedProductQuantity"> Quantity: {op.quantity} </span>
+                    </div>
+                ))}
+                <div className="orderProducts">Order payment:</div>
+                {this.state.orderPayment.map(op => (
+                    <div key={op.id}>
+                        <span className="paymentNumber"> {op.number} </span>
+                        <span className="paymentName"> {op.name} $ </span>
+                        <span className="paymentDate"> {op.date} </span>
                     </div>
                 ))}
             </div>

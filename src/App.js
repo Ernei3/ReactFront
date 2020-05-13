@@ -23,8 +23,9 @@ import AddToBasket from "./Basket/AddToBasket";
 import LetIntoOrders from "./Orders/LetIntoOrders";
 import OrdersByUser from "./Orders/OrdersByUser";
 import OrderDetails from "./Orders/OrderDetails";
-import CheckOut from "./Orders/CheckOut";
+import CheckOut from "./Orders/Checkout";
 import AddAddress from "./OrderAddress/AddAddress";
+import AddPayment from "./Payments/AddPayment";
 
 function App() {
     return <Router>
@@ -71,6 +72,7 @@ function App() {
         <Route path="/order/:ordId" component={OrderDetails}/>
         <Route path="/checkOut/:userId" component={CheckOut}/>
         <Route path="/addAddress/:orderId" component={AddAddress}/>
+        <Route path="/addPayment/:orderId" component={AddPayment}/>
 
     </Router>
 }

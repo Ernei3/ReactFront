@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
-class CheckOut extends Component {
+class Checkout extends Component {
 
     constructor() {
         super();
@@ -119,4 +119,4 @@ class CheckOut extends Component {
     }
 }
 
-export default withRouter(CheckOut);
+export default withRouter(Checkout);

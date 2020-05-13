@@ -110,7 +110,7 @@ class BasketByUser extends Component {
                             <input type="submit" value="Remove" ref={"delete"+bask.id} onClick={() => this.handleClick(bask)}/>
                     </div>
                 ))}
-                <div className="checkOut"><a href={'/checkOut/'+userId}>Check Out</a></div>
+                <div className="checkOut"><a href={'/checkOut/'+userId}>Checkout</a></div>
             </div>
         )
     }
