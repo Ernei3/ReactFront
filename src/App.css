@@ -7,10 +7,6 @@
   text-transform: uppercase;
 }
 
-a {
-
-}
-
 .header, .content, .footer {
   width: 960px;
   margin: 0 auto;
