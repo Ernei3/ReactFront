@@ -45,12 +45,14 @@ class Products extends Component {
 
         return (
             <div className="products">
+                <div className="subtitle">All Products</div>
                 {this.state.products.map(prod => (
-                    <div key={prod.id}>
-                        <span className="productName"> {prod.name} </span>
-                        <span className="productPrice"> {prod.price} $ </span>
-                        <a href={'/product/'+prod.id}>Details</a>
-                        <span className="subOfProd"> {this.state.subcategories.find( ({ id }) => id === prod.subcategory ).name} </span>
+                    <div key={prod.id} className="allProducts">
+                        <a href={'/product/'+prod.id}>
+                            <div className="productName"> {prod.name}</div>
+                            <div className="productPrice"> {prod.price} $ </div>
+                            <div className="subOfProd"> ({this.state.subcategories.find( ({ id }) => id === prod.subcategory ).name}) </div>
+                        </a>
                     </div>
                 ))}
             </div>

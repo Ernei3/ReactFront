@@ -46,12 +46,13 @@ class ProductsBySub extends Component {
     render() {
         return (
             <div className="products">
-                <div className="subcategoryTitle">{this.state.subcategoryName}</div>
+                <div className="subtitle">{this.state.subcategoryName}</div>
                 {this.state.products.map(prod => (
-                    <div key={prod.id}>
-                        <span className="productName"> {prod.name} </span>
-                        <span className="productPrice"> {prod.price} $ </span>
-                        <a href={'/product/'+prod.id}>Details</a>
+                    <div key={prod.id} className="productBySub">
+                        <a href={'/product/'+prod.id}>
+                            <div className="productName"> {prod.name} </div>
+                            <div className="productPrice"> {prod.price} $ </div>
+                        </a>
                     </div>
                 ))}
             </div>
