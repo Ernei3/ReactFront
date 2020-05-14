@@ -44,11 +44,12 @@ class Subcategories extends Component {
 
         return (
             <div className="subcategories">
+                <div className="subtitle">Subcategories</div>
                 {this.state.subcategories.map(sub => (
-                <div key={sub.id}>
+                <div key={sub.id} className="subcategoryByCat">
                     <a href={'/products/'+sub.id}>
-                        <span className="subcategoryName"> {sub.name} </span>
-                        <span className="categoryOfSub"> {this.state.categories.find( ({ id }) => id === sub.category ).name} </span>
+                        <div className="subcategoryName"> {sub.name} </div>
+                        <div className="categoryOfSub"> ({this.state.categories.find( ({ id }) => id === sub.category ).name}) </div>
                     </a>
                 </div>
                 ))}

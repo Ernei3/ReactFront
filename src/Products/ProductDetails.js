@@ -34,14 +34,12 @@ class ProductDetails extends Component {
     render() {
         return (
             <div className="soloProduct">
-                <div key={this.state.product.id}>
                     <div className="soloProductName"> {this.state.product.name} </div>
-                    <div className="soloProductPrice"> {this.state.product.price} $ </div>
+                    <div className="soloProductPrice">Price: {this.state.product.price} $ </div>
                     <div className="soloProductDescription"> {this.state.product.description} </div>
                     <div className="addToWishLink"><a href={'/addToWishlist/'+this.state.product.id}>Add to Wishlist</a></div>
                     <div className="addToBasket"><a href={'/addToBasket/'+this.state.product.id}>Add to Basket</a></div>
                     <div className="reviewsLink"><a href={'/reviews/'+this.state.product.id}>Reviews</a></div>
-                </div>
             </div>
         )
     }

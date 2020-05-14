@@ -26,9 +26,7 @@ class AddToWishlist extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(object),
-        });
-
-        this.props.history.push('/wishlist/'+data.get('user'));
+        }).then(this.props.history.push('/wishlist/'+data.get('user')));
 
     }
 

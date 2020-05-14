@@ -1,24 +1,224 @@
-.App {
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*::first-letter {
+  text-transform: uppercase;
+}
+
+a {
+
+}
+
+.header, .content, .footer {
+  width: 960px;
+  margin: 0 auto;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.menu {
+  list-style-type: none;
+}
+
+.menu_button {
+  display: inline-block;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.menu_button a {
+  display: block;
+  min-width: 160px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  background: #111111;
+  text-decoration: none;
+}
+
+.menu_button:hover a {
+  background: #414141;
+}
+
+.category a, .subcategory a{
+  display: block;
+  float: left;
+  margin: 20px;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+  background: #111111;
+  border-radius: 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.subtitle {
+  width: 960px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  text-transform: uppercase;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
+.productBySub a, .subcategoryByCat a {
+  display: block;
+  float: left;
+  margin: 20px;
+  width: 150px;
   height: 150px;
-  padding: 20px;
+  text-align: center;
+  background: #111111;
+  border-radius: 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.allProducts a {
+  display: block;
+  float: left;
+  margin: 20px;
+  width: 150px;
+  min-height: 200px;
+  text-align: center;
+  background: #111111;
+  border-radius: 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.productName, .subcategoryName {
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+
+.productPrice, .subOfProd {
+  padding-bottom: 10px;
+}
+
+.soloProduct {
+  padding-top: 100px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+}
+
+.soloProductName {
+  margin-bottom: 50px;
+  padding-left: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.soloProductPrice, .reviewTitle {
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.soloProductDescription {
+  margin-bottom: 100px;
+}
+
+.addToWishLink a, .addToBasket a, .addReviewToProd a {
+  display: block;
+  float: left;
+  margin: 10px;
+  width: 150px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  background: #111111;
+  border-radius: 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.reviewsLink {
+  margin-top: 250px;
+}
+
+.reviewsLink a {
+  display: block;
+  width: 100px;
+  height: 40px;
+  border-radius: 15px;
+  background: #4CAF50;
+  line-height: 40px;
+  text-align: center;
   color: white;
+  text-decoration: none;
 }
 
-.App-intro {
-  font-size: large;
+.reviewsLink:hover a, .returnToProduct:hover a {
+  background: #45a049;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.category:hover a, .subcategory:hover a, .productBySub:hover a, .subcategoryByCat:hover a,
+.allProducts:hover a, .addToWishLink:hover a, .addToBasket:hover a, .addReviewToProd:hover a {
+  background: #515151;
+}
+
+.returnToProduct a{
+  display: block;
+  width: 200px;
+  height: 40px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  background: #4CAF50;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.review{
+  margin-bottom: 10px;
+  padding: 20px;
+  background: #ebffd9;
+}
+
+.addReviewMenu{
+  padding-top: 100px;
+  padding-left: 20px;
+}
+
+.addReviewMenu input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.addReviewMenu textarea {
+  width: 100%;
+  height: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  width: 15%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add a background color to the submit button on mouse-over */
+input[type=submit]:hover {
+  background-color: #45a049;
 }

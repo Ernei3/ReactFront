@@ -46,7 +46,8 @@ class ReviewsByProd extends Component {
     render() {
         return (
             <div className="reviewsByProd">
-                <span className="productName">{this.state.product.name}</span>
+                <div className="subtitle">{this.state.product.name}</div>
+                <div className="returnToProduct"><a href={'/product/'+this.state.product.id}>Return to Product</a></div>
                 {this.state.reviews.map(rev => (
                     <div key={rev.id} className="review">
                         <div className="reviewTitle"> {rev.title} </div>

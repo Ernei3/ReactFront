@@ -45,12 +45,10 @@ class SubByCat extends Component {
     render() {
         return (
             <div className="subcategories">
-                <span className="categoryTitle">{this.state.categoryName}</span>
+                <div className="subtitle">{this.state.categoryName}</div>
                 {this.state.subcategories.map(sub => (
-                    <div key={sub.id}>
-                        <a href={'/products/'+sub.id}>
-                            <span className="subcategoryName"> {sub.name}</span>
-                        </a>
+                    <div key={sub.id} className="subcategory">
+                        <a href={'/products/'+sub.id}>{sub.name}</a>
                     </div>
                 ))}
             </div>

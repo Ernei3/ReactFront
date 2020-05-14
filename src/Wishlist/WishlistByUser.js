@@ -55,21 +55,22 @@ class WishlistByUser extends Component {
 
     async handleClickMove(wish) {
 
-        let url1 = `http://localhost:9000/addToBasketJson`;
+        let url1 = `http://localhost:9000/removeFromWishlistJson`;
 
         await fetch(url1, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(wish),
+        });
+
+        let url2 = `http://localhost:9000/addToBasketJson`;
+
+        await fetch(url2, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(wish),
         });
 
-        let url2 = `http://localhost:9000/removeFromWishlistJson`;
-
-        await fetch(url2, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(wish),
-        });
         window.location.reload();
 
     }

@@ -29,7 +29,7 @@ class AddAddress extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(object),
-        }).then(this.props.history.push('/addPayment'+orderId))
+        }).then(this.props.history.push('/addPayment/'+orderId))
 
 
     }

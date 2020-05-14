@@ -26,8 +26,8 @@ class Categories extends Component {
             }).then(data => {
             let categories = data.map((cat) => {
                 return (
-                    <div key={cat.id}>
-                        <div className="name"><a href={'/subcategory/'+cat.id}>{cat.name}</a> </div>
+                    <div key={cat.id} className="category">
+                        <a href={'/subcategory/'+cat.id}>{cat.name}</a>
                     </div>
                 )
             })
@@ -38,6 +38,7 @@ class Categories extends Component {
     render() {
         return (
             <div className="categories">
+                <div className="subtitle">Categories</div>
                 {this.state.categories}
             </div>
         )
