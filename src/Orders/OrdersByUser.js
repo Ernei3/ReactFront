@@ -37,10 +37,10 @@ class OrdersByUser extends Component {
 
         return (
             <div className="ordersByUser">
-                <div className="sorderByUserTitle">Orders of user {userId}</div>
+                <div className="subtitle">Orders of user {userId}</div>
                 {this.state.orders.map((ord) => {
                     return (
-                    <div key={ord.id}>
+                    <div key={ord.id} className="singleOrder">
                         <span className="orderId">{ord.id} </span>
                         <span className="orderStatus">{ord.status} </span>
                         <span className="orderDetails"><a href={'/order/'+ord.id}>Details</a> </span>

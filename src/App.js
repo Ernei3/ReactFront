@@ -14,18 +14,16 @@ import ProductsBySub from "./Products/ProductsBySub";
 import ProductDetails from "./Products/ProductDetails";
 import ReviewsByProd from "./Reviews/ReviewsByProd";
 import AddReviewMenu from "./Reviews/AddReviewMenu";
-import LetIntoWishlist from "./Wishlist/LetIntoWishlist";
 import WishlistByUser from "./Wishlist/WishlistByUser";
 import AddToWishlist from "./Wishlist/AddToWishlist";
-import LetIntoBasket from "./Basket/LetIntoBasket";
 import BasketByUser from "./Basket/BasketByUser";
 import AddToBasket from "./Basket/AddToBasket";
-import LetIntoOrders from "./Orders/LetIntoOrders";
 import OrdersByUser from "./Orders/OrdersByUser";
 import OrderDetails from "./Orders/OrderDetails";
 import CheckOut from "./Orders/Checkout";
 import AddAddress from "./OrderAddress/AddAddress";
 import AddPayment from "./Payments/AddPayment";
+import LetInto from "./LetInto";
 
 function App() {
     return <Router>
@@ -42,13 +40,13 @@ function App() {
                         <Link to="/allProducts">Products</Link>
                     </li>
                     <li className="menu_button">
-                        <Link to="/enterWishlist">Wishlist</Link>
+                        <Link to="/enter/wishlist">Wishlist</Link>
                     </li>
                     <li className="menu_button">
-                        <Link to="/enterBasket">Basket</Link>
+                        <Link to="/enter/basket">Basket</Link>
                     </li>
                     <li className="menu_button">
-                        <Link to="/enterOrders">Orders</Link>
+                        <Link to="/enter/orders">Orders</Link>
                     </li>
                 </ul>
             </nav></div>
@@ -60,13 +58,11 @@ function App() {
             <Route path="/product/:id" component={ProductDetails}/>
             <Route path="/reviews/:prodId" component={ReviewsByProd}/>
             <Route path="/addReview/:prodId" component={AddReviewMenu}/>
-            <Route path="/enterWishlist" component={LetIntoWishlist}/>
+            <Route path="/enter/:point" component={LetInto}/>
             <Route path="/wishlist/:userId" component={WishlistByUser}/>
             <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
-            <Route path="/enterBasket" component={LetIntoBasket}/>
             <Route path="/basket/:userId" component={BasketByUser}/>
             <Route path="/addToBasket/:prodId" component={AddToBasket}/>
-            <Route path="/enterOrders" component={LetIntoOrders}/>
             <Route path="/orders/:userId" component={OrdersByUser}/>
             <Route path="/order/:ordId" component={OrderDetails}/>
             <Route path="/checkOut/:userId" component={CheckOut}/>

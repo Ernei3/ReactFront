@@ -33,13 +33,13 @@ class AddToWishlist extends Component {
     render() {
         const { prodId } = this.props.match.params;
         return (
-            <div className="addReviewMenu">
+            <div className="addToWishMenu">
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="user">User</label>
                     <input id="user" name="user" type="number"/>
 
                     <label htmlFor="quantity">Quantity</label>
-                    Quantity:<input type="number" id="quantity" name="quantity" min="1" max="15" defaultValue="1" />
+                    <input type="number" id="quantity" name="quantity" min="1" max="15" defaultValue="1" />
 
                     <input name="product" id="product" value={prodId} type="hidden"/>
 
