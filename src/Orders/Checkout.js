@@ -99,15 +99,18 @@ class Checkout extends Component {
         if(this.state.priceSum > 0){
             return (
                 <div className="checkOut">
-                    <div className="checkOutTitle">Check Out</div>
+                    <div className="subtitle">Check Out</div>
                     {this.state.basket.map(bask => (
-                        <div key={bask.id}>
+                        <div key={bask.id} className="singleBask">
                             <span className="prodOfBaskName"> {this.state.products.find( ({ id }) => id === bask.product ).name} </span>
                             <span className="prodOfBaskPrice"> {this.state.products.find( ({ id }) => id === bask.product ).price} $</span>
-                            <span className="prodOfBaskPrice"> Quantity: {bask.quantity}</span>
+                            <div className="prodOfBaskPrice"> Quantity: {bask.quantity}</div>
                         </div>
                     ))}
-                    <div className="priceSum">{this.state.priceSum} $</div>
+                    <div className="priceSum">
+                        <span className="hereSum">Altogether: </span>
+                        <span className="finalPrice">{this.state.priceSum} $</span>
+                    </div>
                     <input type="submit" value="Buying" onClick={this.handleClick}/>
                 </div>
             )

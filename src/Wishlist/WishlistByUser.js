@@ -118,9 +118,9 @@ class WishlistByUser extends Component {
 
         return (
             <div className="wishlistByUser">
-                <div className="wishlistUser">Wishlist for {userId}</div>
+                <div className="subtitle">Wishlist for {userId}</div>
                 {this.state.wishlist.map(wish => (
-                    <div key={wish.id}>
+                    <div key={wish.id} className="singleWish">
                         <span className="prodOfWishName"> {this.state.products.find( ({ id }) => id === wish.product ).name} </span>
                         <span className="prodOfWishPrice"> {this.state.products.find( ({ id }) => id === wish.product ).price} $</span>
                         <form onSubmit={this.handleSubmit}>

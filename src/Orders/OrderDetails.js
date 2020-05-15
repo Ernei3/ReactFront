@@ -89,26 +89,27 @@ class OrderDetails extends Component {
     render() {
         return (
             <div className="order">
-                <div className="orderTitle">Details for order {this.state.order.id}</div>
+                <div className="subtitle">Details for order {this.state.order.id}</div>
                 <div className="orderUser">User: {this.state.order.user}</div>
                 <div className="orderStatus">Status: {this.state.order.status}</div>
                 <div className="orderAddress">Sent to: {this.state.orderAddress.street} {this.state.orderAddress.number} {this.state.orderAddress.city} {this.state.orderAddress.country}</div>
                 <div className="orderProducts">Ordered products:</div>
                 {this.state.orderedProducts.map(op => (
-                    <div key={op.id}>
+                    <div key={op.id} className="singleProd">
                         <span className="orderedProductName"> {op.name} </span>
                         <span className="orderedProductPrice"> {op.price} $ </span>
-                        <span className="orderedProductQuantity"> Quantity: {op.quantity} </span>
+                        <div className="orderedProductQuantity"> Quantity: {op.quantity} </div>
                     </div>
                 ))}
-                <div className="orderProducts">Order payment:</div>
+                <div className="orderPayment">Order payment:</div>
                 {this.state.orderPayment.map(op => (
                     <div key={op.id}>
                         <span className="paymentNumber"> {op.number} </span>
-                        <span className="paymentName"> {op.name} $ </span>
+                        <span className="paymentName"> {op.name} </span>
                         <span className="paymentDate"> {op.date} </span>
                     </div>
                 ))}
+                <div className="returnToOrders"><a href={'/order/'+this.state.order.user}>Return to Orders</a></div>
             </div>
         )
     }

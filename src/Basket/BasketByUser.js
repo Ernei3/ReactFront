@@ -95,9 +95,9 @@ class BasketByUser extends Component {
 
         return (
             <div className="basketByUser">
-                <div className="basketUser">Basket for {userId}</div>
+                <div className="subtitle">Basket for {userId}</div>
                 {this.state.basket.map(bask => (
-                    <div key={bask.id}>
+                    <div key={bask.id} className="singleBask">
                         <span className="prodOfBaskName"> {this.state.products.find( ({ id }) => id === bask.product ).name} </span>
                         <span className="prodOfBaskPrice"> {this.state.products.find( ({ id }) => id === bask.product ).price} $</span>
                         <form onSubmit={this.handleSubmit}>
