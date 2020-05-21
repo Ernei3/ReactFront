@@ -1,42 +1,41 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom'
+import React, { useContext } from 'react';
+import {useParams} from 'react-router-dom'
+import {UserContext} from "./providers/UserProvider";
 
-class LetInto extends Component {
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
 
-    handleSubmit(event) {
+export default function LetInto(props){
+    const {user, setUser} = useContext(UserContext);
+    const { point } = useParams();
 
-        const { point } = this.props.match.params;
+    console.log(user, setUser);
+
+    const handleSubmit = event => {
+
 
         event.preventDefault();
         let userId = event.target.userId.value;
+        console.log(userId);
+
 
         if(point === "wishlist"){
-            this.props.history.push('/wishlist/'+userId);
+            props.history.push('/wishlist/'+userId);
         }else if(point === "basket"){
-            this.props.history.push('/basket/'+userId);
-        }else if(point === "orders"){
-            this.props.history.push('/orders/'+userId);
+            props.history.push('/basket/'+userId);
+        }else if(point === "orders") {
+            props.history.push('/point/'+userId);
         }
-
     }
 
-    render() {
-        return (
-            <div className="letInto">
-                <form onSubmit={this.handleSubmit}>
 
-                    <label htmlFor="userId">User Id:</label>
-                    <input id="userId" name="userId" type="text" />
+    return (
+        <div className="letInto">
+            <form onSubmit={handleSubmit}>
 
-                    <button>Go</button>
-                </form>
-            </div>
-        )
-    }
+                <label htmlFor="userId">User Id:</label>
+                <input id="userId" name="userId" type="text" />
+
+                <button>Go</button>
+            </form>
+        </div>
+    )
 }
-
-export default withRouter(LetInto);
