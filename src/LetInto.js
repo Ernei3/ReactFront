@@ -30,7 +30,7 @@ class LetInto extends Component {
                 <form onSubmit={this.handleSubmit}>
 
                     <label htmlFor="userId">User Id:</label>
-                    <input id="userId" name="userId" type="number" min="0"/>
+                    <input id="userId" name="userId" type="text" />
 
                     <button>Go</button>
                 </form>

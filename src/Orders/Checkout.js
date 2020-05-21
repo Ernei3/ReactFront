@@ -59,7 +59,7 @@ class Checkout extends Component {
 
         const object = {
             "id": 0,
-            "user": Number(userId),
+            "user": userId,
             "status": "Created",
             "address": 0
         }

@@ -14,7 +14,7 @@ class AddToWishlist extends Component {
 
         let object = {
             "id": Number(0),
-            "user": Number(data.get('user')),
+            "user": data.get('user'),
             "quantity": Number(data.get('quantity')),
             "product": Number(data.get('product'))
         };
@@ -36,7 +36,7 @@ class AddToWishlist extends Component {
             <div className="addToWishMenu">
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="user">User</label>
-                    <input id="user" name="user" type="number"/>
+                    <input id="user" name="user" type="text"/>
 
                     <label htmlFor="quantity">Quantity</label>
                     <input type="number" id="quantity" name="quantity" min="1" max="15" defaultValue="1" />

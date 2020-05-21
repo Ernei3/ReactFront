@@ -73,7 +73,7 @@ class BasketByUser extends Component {
 
         let object = {
             "id": Number(data.get('id')),
-            "user": Number(data.get('user')),
+            "user": data.get('user'),
             "quantity": Number(data.get('quantity')),
             "product": Number(data.get('product'))
         };
