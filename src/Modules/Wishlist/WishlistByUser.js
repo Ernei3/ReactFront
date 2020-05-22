@@ -40,19 +40,14 @@ export default function WishlistByUser(props){
 
         }
         fetchData();
-    }, []);
+    }, [user.id]);
 
 
     function handleChange(event, wish) {
-        console.log(event.target.value)
-        console.log(wish);
 
         wish.quantity = Number(event.target.value);
 
-        console.log(wish);
-
         let url = `http://localhost:9000/updateWishlistJson`;
-
         fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -64,7 +59,6 @@ export default function WishlistByUser(props){
     async function handleClickMove(wish) {
 
         let url1 = `http://localhost:9000/removeFromWishlistJson`;
-
         await fetch(url1, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -72,7 +66,6 @@ export default function WishlistByUser(props){
         });
 
         let url2 = `http://localhost:9000/addToBasketJson`;
-
         await fetch(url2, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
