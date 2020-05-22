@@ -45,7 +45,7 @@ function App() {
                                 <Link to="/allProducts">Products</Link>
                             </li>
                             <li className="menu_button">
-                                <Link to="/enter/wishlist">Wishlist</Link>
+                                <Link to="/wishlist">Wishlist</Link>
                             </li>
                             <li className="menu_button">
                                 <Link to="/enter/basket">Basket</Link>
@@ -66,7 +66,7 @@ function App() {
                 <Route path="/reviews/:prodId" component={ReviewsByProd}/>
                 <Route path="/addReview/:prodId" component={AddReviewMenu}/>
                 <Route path="/enter/:point" component={LetInto}/>
-                <Route path="/wishlist/:userId" component={WishlistByUser}/>
+                <Route path="/wishlist" component={WishlistByUser}/>
                 <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
                 <Route path="/basket/:userId" component={BasketByUser}/>
                 <Route path="/addToBasket/:prodId" component={AddToBasket}/>
