@@ -1,55 +1,53 @@
-import React, {Component} from 'react';
+import React, {useContext, useEffect} from 'react';
+import {UserContext} from "../../providers/UserProvider";
+import {useParams} from "react-router-dom";
 
-class OrdersByUser extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            orders: [],
-        };
-    }
+export default function OrdersByUser(){
 
-    componentDidMount() {
 
-        const { userId } = this.props.match.params;
+    const {user, setUser} = useContext(UserContext);
+    const [orders, setOrders] = React.useState([]);
 
-        var url = `http://localhost:9000/ordersJson/${userId}`
+    useEffect(function effectFunction() {
+        async function fetchData() {
 
-        fetch(url, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'GET',
-        })
-            .then(results => {
-                return results.json();
-            }).then(data => {
-            this.setState({orders: data})
-        })
-    }
+            let url = `http://localhost:9000/ordersJson/${user.id}`
 
-    render() {
+            fetch(url, {
+                mode: 'cors',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'http://localhost:3000',
+                },
+                method: 'GET',
+            })
+                .then(results => {
+                    return results.json();
+                }).then(data => {
+                setOrders(data)
+            })
 
-        const { userId } = this.props.match.params;
+        }
+        fetchData();
+    }, [user.id]);
 
-        return (
-            <div className="ordersByUser">
-                <div className="subtitle">Orders of user {userId}</div>
-                {this.state.orders.map((ord) => {
-                    return (
+    return (
+        <div className="ordersByUser">
+            <div className="subtitle">Orders of user {user.id}</div>
+            {orders.map((ord) => {
+                return (
                     <div key={ord.id} className="singleOrder">
                         <span className="orderId">{ord.id} </span>
                         <span className="orderStatus">{ord.status} </span>
                         <span className="orderDetails"><a href={'/order/'+ord.id}>Details</a> </span>
                     </div>
-                    )
-                })}
-            </div>
-        )
-    }
-}
+                )
+            })}
+        </div>
+    )
 
-export default OrdersByUser;
+
+
+}

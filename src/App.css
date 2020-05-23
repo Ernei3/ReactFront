@@ -295,12 +295,14 @@ input[type=submit]:hover, .letInto button:hover, .addToWishMenu button:hover, .a
 }
 
 .logIn{
+  display: block;
   width: 150px;
   float: right;
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
-  margin: 3px 3px;
+  margin-left: 100%;
+  margin-bottom: 3px;
   border: none;
   border-radius: 4px;
   cursor: pointer;

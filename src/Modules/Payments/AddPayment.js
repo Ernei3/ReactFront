@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom'
+import React, {useContext, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import {UserContext} from "../../providers/UserProvider";
 
-class AddPayment extends Component {
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+export default function AddPayment(props) {
 
-    async handleSubmit(event) {
+    const { orderId } = useParams();
 
-        const { orderId } = this.props.match.params;
+    async function handleSubmit(event) {
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -46,8 +43,6 @@ class AddPayment extends Component {
             "order": Number(orderId)
         };
 
-        console.log(JSON.stringify(object))
-
         let url3 = `http://localhost:9000/sendPaymentJson`;
 
         await fetch(url3, {
@@ -57,29 +52,28 @@ class AddPayment extends Component {
         })
 
 
-        this.props.history.push('/order/'+orderId);
+        props.history.push('/order/'+orderId);
 
 
     }
 
-    render() {
 
-        return (
-            <div className="addOrderAddress">
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="number">Number</label>
-                    <input id="number" name="number" type="text"/>
-                    <label htmlFor="name">Name on the card:</label>
-                    <input id="name" name="name" type="text"/>
-                    <label htmlFor="date">Expiration date:</label>
-                    <input id="date" name="date" type="text"/>
-                    <label htmlFor="code">Code</label>
-                    <input id="code" name="code" type="text"/>
-                    <button>Pay</button>
-                </form>
-            </div>
-        )
-    }
+    return (
+        <div className="addOrderAddress">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="number">Number</label>
+                <input id="number" name="number" type="text"/>
+                <label htmlFor="name">Name on the card:</label>
+                <input id="name" name="name" type="text"/>
+                <label htmlFor="date">Expiration date:</label>
+                <input id="date" name="date" type="text"/>
+                <label htmlFor="code">Code</label>
+                <input id="code" name="code" type="text"/>
+                <button>Pay</button>
+            </form>
+        </div>
+    )
+
+
+
 }
-
-export default withRouter(AddPayment);

@@ -23,10 +23,10 @@ import OrderDetails from "./Modules/Orders/OrderDetails";
 import CheckOut from "./Modules/Orders/Checkout";
 import AddAddress from "./Modules/OrderAddress/AddAddress";
 import AddPayment from "./Modules/Payments/AddPayment";
-import LetInto from "./LetInto";
 import UserProvider from "./providers/UserProvider";
 import Oauth from "./Auth/Oauth";
-import SocialLoginButton from "./Auth/OathButton";
+import LogNav from "./Auth/LogNav";
+
 
 function App() {
     return <Router>
@@ -48,14 +48,14 @@ function App() {
                                 <Link to="/wishlist">Wishlist</Link>
                             </li>
                             <li className="menu_button">
-                                <Link to="/enter/basket">Basket</Link>
+                                <Link to="/basket">Basket</Link>
                             </li>
                             <li className="menu_button">
-                                <Link to="/enter/orders">Orders</Link>
+                                <Link to="/orders">Orders</Link>
                             </li>
                         </ul>
                     </nav>
-                    <SocialLoginButton provider={"google"} title={"Login with Google"}/>
+                    <LogNav />
                 </div>
                 <Route path="/categories" component={Categories}/>
                 <Route path="/subcategories" component={Subcategories}/>
@@ -65,14 +65,13 @@ function App() {
                 <Route path="/product/:id" component={ProductDetails}/>
                 <Route path="/reviews/:prodId" component={ReviewsByProd}/>
                 <Route path="/addReview/:prodId" component={AddReviewMenu}/>
-                <Route path="/enter/:point" component={LetInto}/>
                 <Route path="/wishlist" component={WishlistByUser}/>
                 <Route path="/addToWishlist/:prodId" component={AddToWishlist}/>
-                <Route path="/basket/:userId" component={BasketByUser}/>
+                <Route path="/basket" component={BasketByUser}/>
                 <Route path="/addToBasket/:prodId" component={AddToBasket}/>
-                <Route path="/orders/:userId" component={OrdersByUser}/>
+                <Route path="/orders" component={OrdersByUser}/>
                 <Route path="/order/:ordId" component={OrderDetails}/>
-                <Route path="/checkOut/:userId" component={CheckOut}/>
+                <Route path="/checkOut/" component={CheckOut}/>
                 <Route path="/addAddress/:orderId" component={AddAddress}/>
                 <Route path="/addPayment/:orderId" component={AddPayment}/>
                 <Route path="/oauth/:provider" component={Oauth} />

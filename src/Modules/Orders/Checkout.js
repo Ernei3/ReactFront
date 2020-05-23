@@ -1,65 +1,64 @@
-import React, {Component} from 'react';
-import {withRouter} from "react-router-dom";
+import React, {useContext, useEffect} from 'react';
+import {UserContext} from "../../providers/UserProvider";
 
-class Checkout extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            basket: [],
-            products: [],
-            priceSum: 0,
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
+export default function Checkout(props){
 
-    async componentDidMount() {
+    const {user, setUser} = useContext(UserContext);
 
-        const { userId } = this.props.match.params;
+    const [basket, setBasket] = React.useState([]);
+    const [products, setProducts] = React.useState([]);
+    const [priceSum, setPriceSum] = React.useState(0);
 
-        let url1 = `http://localhost:9000/basketJson/${userId}`
-        const baskResponse = await fetch(url1, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'GET',
-        })
 
-        let url2 = "http://localhost:9000/productsJson"
-        const prodResponse = await fetch(url2, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'GET',
-        })
+    useEffect(function effectFunction() {
+        async function fetchData() {
+            let url1 = `http://localhost:9000/basketJson/${user.id}`
+            const baskResponse = await fetch(url1, {
+                mode: 'cors',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'http://localhost:3000',
+                },
+                method: 'GET',
+            })
+            let url2 = "http://localhost:9000/productsJson"
+            const prodResponse = await fetch(url2, {
+                mode: 'cors',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'http://localhost:3000',
+                },
+                method: 'GET',
+            })
 
-        const baskJson = await baskResponse.json();
-        const prodJson = await prodResponse.json();
+            const baskJson = await baskResponse.json();
+            const prodJson = await prodResponse.json();
 
-        let sum = 0;
-        baskJson.forEach(calcPrice);
+            let sum = 0;
+            baskJson.forEach(calcPrice);
 
-        function calcPrice(item) {
-            sum += item.quantity*prodJson.find( ({ id }) => id === item.product ).price;
+            function calcPrice(item) {
+                sum += item.quantity*prodJson.find( ({ id }) => id === item.product ).price;
+            }
+
+
+            setBasket(baskJson);
+            setProducts(prodJson);
+            setPriceSum(sum);
+
         }
+        fetchData();
+    }, [user.id]);
 
-        this.setState({basket: baskJson, products: prodJson, priceSum: sum });
 
-    }
-
-    async handleClick() {
-
-        const { userId } = this.props.match.params;
+    async function handleClick() {
 
         const object = {
             "id": 0,
-            "user": userId,
+            "user": user.id,
             "status": "Created",
             "address": 0
         }
@@ -88,38 +87,50 @@ class Checkout extends Component {
             },
             method: 'POST',
             body: JSON.stringify(ordJson),
-        })
-
-        this.props.history.push('/addAddress/'+ordJson.id);
+        }).then(props.history.push('/addAddress/'+ordJson.id));
 
     }
+
+    if(priceSum > 0){
+        return (
+            <div className="checkOut">
+                <div className="subtitle">Check Out</div>
+                {basket.map(bask => (
+                    <div key={bask.id} className="singleBask">
+                        <span className="prodOfBaskName"> {products.find( ({ id }) => id === bask.product ).name} </span>
+                        <span className="prodOfBaskPrice"> {products.find( ({ id }) => id === bask.product ).price} $</span>
+                        <div className="prodOfBaskPrice"> Quantity: {bask.quantity}</div>
+                    </div>
+                ))}
+                <div className="priceSum">
+                    <span className="hereSum">Altogether: </span>
+                    <span className="finalPrice">{priceSum} $</span>
+                </div>
+                <input type="submit" value="Buying" onClick={handleClick}/>
+            </div>
+        )
+    }else{
+        return (
+            <div className="checkOut">Your basket is empty!</div>
+        )
+    }
+
+
+
+
+
+}
+
+/*
+class Checkout extends Component {
+
+
+
 
     render() {
 
-        if(this.state.priceSum > 0){
-            return (
-                <div className="checkOut">
-                    <div className="subtitle">Check Out</div>
-                    {this.state.basket.map(bask => (
-                        <div key={bask.id} className="singleBask">
-                            <span className="prodOfBaskName"> {this.state.products.find( ({ id }) => id === bask.product ).name} </span>
-                            <span className="prodOfBaskPrice"> {this.state.products.find( ({ id }) => id === bask.product ).price} $</span>
-                            <div className="prodOfBaskPrice"> Quantity: {bask.quantity}</div>
-                        </div>
-                    ))}
-                    <div className="priceSum">
-                        <span className="hereSum">Altogether: </span>
-                        <span className="finalPrice">{this.state.priceSum} $</span>
-                    </div>
-                    <input type="submit" value="Buying" onClick={this.handleClick}/>
-                </div>
-            )
-        }else{
-            return (
-                <div className="checkOut">Your basket is empty!</div>
-            )
-        }
+
     }
 }
 
-export default withRouter(Checkout);
+export default withRouter(Checkout);*/

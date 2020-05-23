@@ -25,7 +25,7 @@ export default function AddToWishlist(props){
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(object),
-        }).then(props.history.push('/wishlist/'+data.get('user')));
+        }).then(props.history.push('/wishlist/'));
 
 
     }

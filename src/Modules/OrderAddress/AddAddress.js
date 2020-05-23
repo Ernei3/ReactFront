@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom'
+import React, {useContext, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import {UserContext} from "../../providers/UserProvider";
 
-class AddAddress extends Component {
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+export default function AddAddress(props) {
 
-    handleSubmit(event) {
+    const { orderId } = useParams();
 
-        const { orderId } = this.props.match.params;
+    function handleSubmit(event) {
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -29,29 +26,25 @@ class AddAddress extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(object),
-        }).then(this.props.history.push('/addPayment/'+orderId))
-
+        }).then(props.history.push('/addPayment/'+orderId))
 
     }
 
-    render() {
 
-        return (
-            <div className="addOrderAddress">
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="user">Country</label>
-                    <input id="country" name="country" type="text"/>
-                    <label htmlFor="city">City</label>
-                    <input id="city" name="city" type="text"/>
-                    <label htmlFor="street">Street</label>
-                    <input id="street" name="street" type="text"/>
-                    <label htmlFor="number">Number</label>
-                    <input id="number" name="number" type="text"/>
-                    <button>Send to this Address</button>
-                </form>
-            </div>
-        )
-    }
+    return (
+        <div className="addOrderAddress">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="user">Country</label>
+                <input id="country" name="country" type="text"/>
+                <label htmlFor="city">City</label>
+                <input id="city" name="city" type="text"/>
+                <label htmlFor="street">Street</label>
+                <input id="street" name="street" type="text"/>
+                <label htmlFor="number">Number</label>
+                <input id="number" name="number" type="text"/>
+                <button>Send to this Address</button>
+            </form>
+        </div>
+    )
+
 }
-
-export default withRouter(AddAddress);

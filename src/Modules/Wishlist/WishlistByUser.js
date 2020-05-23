@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
 
 
-export default function WishlistByUser(props){
+export default function WishlistByUser(){
 
     const {user, setUser} = useContext(UserContext);
 
