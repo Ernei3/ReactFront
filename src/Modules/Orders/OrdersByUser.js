@@ -35,7 +35,7 @@ export default function OrdersByUser(){
 
     return (
         <div className="ordersByUser">
-            <div className="subtitle">Orders of user {user.id}</div>
+            <div className="subtitle">Orders of user {user.firstName} {user.lastName}</div>
             {orders.map((ord) => {
                 return (
                     <div key={ord.id} className="singleOrder">

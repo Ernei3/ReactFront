@@ -5,6 +5,7 @@ import {UserContext} from "../../providers/UserProvider";
 export default function AddPayment(props) {
 
     const { orderId } = useParams();
+    const {user, setUser} = useContext(UserContext);
 
     async function handleSubmit(event) {
 
@@ -19,6 +20,7 @@ export default function AddPayment(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
             },
             method: 'GET',
         })
@@ -30,7 +32,12 @@ export default function AddPayment(props) {
 
         await fetch(url2, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(ordJson),
         })
 

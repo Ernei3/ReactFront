@@ -26,6 +26,7 @@ import AddPayment from "./Modules/Payments/AddPayment";
 import UserProvider from "./providers/UserProvider";
 import Oauth from "./Auth/Oauth";
 import LogNav from "./Auth/LogNav";
+import LogIn from "./Auth/LogIn";
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/addAddress/:orderId" component={AddAddress}/>
                 <Route path="/addPayment/:orderId" component={AddPayment}/>
                 <Route path="/oauth/:provider" component={Oauth} />
+                <Route path="/logIn" component={LogIn} />
             </div>
         </UserProvider>
     </Router>

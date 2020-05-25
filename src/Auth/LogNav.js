@@ -3,7 +3,7 @@ import {UserContext} from '../providers/UserProvider';
 import SocialLoginButton from "./OathButton";
 
 
-export default function LogNav(props) {
+export default function LogNav() {
     const {user, setUser} = useContext(UserContext);
 
 
@@ -12,7 +12,7 @@ export default function LogNav(props) {
         setUser(undefined);
     }
 
-    if(user === undefined){
+    if(user === undefined || user === null){
             return(
         <div>
             <SocialLoginButton provider={"google"} title={"Login with Google"}/>
