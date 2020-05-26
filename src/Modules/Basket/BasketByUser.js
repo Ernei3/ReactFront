@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
+import {Redirect} from "react-router-dom";
 
 
 export default function BasketByUser(){
@@ -18,6 +19,7 @@ export default function BasketByUser(){
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'http://localhost:3000',
+                    'X-Auth-Token': user?.token
                 },
                 method: 'GET',
             })
@@ -32,15 +34,22 @@ export default function BasketByUser(){
                 method: 'GET',
             })
 
-            const baskJson = await baskResponse.json();
-            const prodJson = await prodResponse.json();
+            if (baskResponse.status >= 400 && baskResponse.status < 500) {
+                setUser(null);
+            }else {
 
-            setBasket(baskJson);
-            setProducts(prodJson)
+                const baskJson = await baskResponse.json();
+                const prodJson = await prodResponse.json();
+
+                setBasket(baskJson);
+                setProducts(prodJson)
+            }
 
         }
-        fetchData();
-    }, [user.id]);
+        if(user){
+            fetchData();
+        }
+    }, [user]);
 
 
     function handleChange(event, bask) {
@@ -50,7 +59,12 @@ export default function BasketByUser(){
         let url = `http://localhost:9000/updateBasketJson`;
         fetch(url, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(bask)
         });
 
@@ -62,7 +76,12 @@ export default function BasketByUser(){
 
         fetch(url, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(bask),
         });
         window.location.reload();
@@ -70,7 +89,11 @@ export default function BasketByUser(){
     }
 
 
-    if (basket.length > 0 && products.length > 0){
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else if (basket.length > 0 && products.length > 0){
         return(
             <div className="basketByUser">
                 <div className="subtitle">Basket for {user.firstName} {user.lastName}</div>

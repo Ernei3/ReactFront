@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {useParams} from 'react-router-dom'
+import {Redirect, useParams} from 'react-router-dom'
 import {UserContext} from "../../providers/UserProvider";
 
 export default function AddToWishlist(props){
@@ -23,25 +23,40 @@ export default function AddToWishlist(props){
 
         fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(object),
-        }).then(props.history.push('/wishlist/'));
+        }).then(response =>
+            response.status >= 400 ? setUser(null) : props.history.push('/wishlist/')
+        );
 
 
     }
 
 
-    return (
-        <div className="addToWishMenu">
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" min="1" max="15" defaultValue="1" />
+    if(user === undefined || user === null){
+        return(
+            <Redirect to='/logIn'/>
+        )
+    }else{
+        return (
+            <div className="addToWishMenu">
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="15" defaultValue="1" />
 
-                <input name="product" id="product" value={prodId} type="hidden"/>
+                    <input name="product" id="product" value={prodId} type="hidden"/>
 
-                <button>Add to wishlist</button>
-            </form>
-        </div>
-    )
+                    <button>Add to wishlist</button>
+                </form>
+            </div>
+        )
+    }
+
+
 
 }

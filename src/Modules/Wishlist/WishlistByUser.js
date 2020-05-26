@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
+import {Redirect} from "react-router-dom";
 
 
 export default function WishlistByUser(){
@@ -18,6 +19,7 @@ export default function WishlistByUser(){
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'http://localhost:3000',
+                    'X-Auth-Token': user?.token
                 },
                 method: 'GET',
             })
@@ -32,15 +34,22 @@ export default function WishlistByUser(){
                 method: 'GET',
             })
 
-            const wishJson = await wishResponse.json();
-            const prodJson = await prodResponse.json();
+            if (wishResponse.status >= 400 && wishResponse.status < 500) {
+                setUser(null);
+            }else{
 
-            setWishlist(wishJson);
-            setProducts(prodJson)
+                const wishJson = await wishResponse.json();
+                const prodJson = await prodResponse.json();
+
+                setWishlist(wishJson);
+                setProducts(prodJson);
+            }
 
         }
-        fetchData();
-    }, [user.id]);
+        if(user){
+            fetchData();
+        }
+    }, [user]);
 
 
     function handleChange(event, wish) {
@@ -50,7 +59,12 @@ export default function WishlistByUser(){
         let url = `http://localhost:9000/updateWishlistJson`;
         fetch(url, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(wish)
         });
 
@@ -61,14 +75,24 @@ export default function WishlistByUser(){
         let url1 = `http://localhost:9000/removeFromWishlistJson`;
         await fetch(url1, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(wish),
         });
 
         let url2 = `http://localhost:9000/addToBasketJson`;
         await fetch(url2, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(wish),
         }).then(window.location.reload());
 
@@ -81,7 +105,12 @@ export default function WishlistByUser(){
 
         fetch(url, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(wish),
         });
         window.location.reload();
@@ -89,7 +118,12 @@ export default function WishlistByUser(){
     }
 
 
-    if (wishlist.length > 0 && products.length > 0){
+
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else if (wishlist.length > 0 && products.length > 0){
         return(
             <div className="wishlistByUser">
                 <div className="subtitle">Wishlist for {user.firstName} {user.lastName}</div>
@@ -112,6 +146,8 @@ export default function WishlistByUser(){
             </div>
         )
     }
+
+
 
 
 }

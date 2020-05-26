@@ -32,7 +32,7 @@ export default function Checkout(props){
             })
 
             if (ordResponse.status >= 400 && ordResponse.status < 500) {
-                setUser(undefined);
+                setUser(null);
             }else {
 
                 let url2 = `http://localhost:9000/orderedProductsJson/${ordId}`
