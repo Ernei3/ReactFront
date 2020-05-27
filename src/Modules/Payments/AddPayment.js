@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import {UserContext} from "../../providers/UserProvider";
 
 export default function AddPayment(props) {
@@ -25,61 +25,81 @@ export default function AddPayment(props) {
             method: 'GET',
         })
 
-        const ordJson = await ordResponse.json();
-        ordJson.status = "Accepted";
+        if (ordResponse.status >= 400 && ordResponse.status < 500) {
+            setUser(null);
+        }else {
 
-        let url2 = `http://localhost:9000/updateOrderJson`;
+            const ordJson = await ordResponse.json();
+            ordJson.status = "Accepted";
 
-        await fetch(url2, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-                'X-Auth-Token': user?.token
-            },
-            body: JSON.stringify(ordJson),
-        })
+            let url2 = `http://localhost:9000/updateOrderJson`;
 
-        let object = {
-            "id": Number(0),
-            "number": data.get('number'),
-            "name": data.get('name'),
-            "date": data.get('date'),
-            "code": data.get('code'),
-            "order": Number(orderId)
-        };
+            const updateResponse = await fetch(url2, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'X-Auth-Token': user?.token
+                },
+                body: JSON.stringify(ordJson),
+            })
 
-        let url3 = `http://localhost:9000/sendPaymentJson`;
+            if (updateResponse.status >= 400 && updateResponse.status < 500) {
+                setUser(null);
+            }else {
 
-        await fetch(url3, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(object),
-        })
+                let object = {
+                    "id": Number(0),
+                    "number": data.get('number'),
+                    "name": data.get('name'),
+                    "date": data.get('date'),
+                    "code": data.get('code'),
+                    "order": Number(orderId)
+                };
 
+                let url3 = `http://localhost:9000/sendPaymentJson`;
+
+                await fetch(url3, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:3000',
+                        'X-Auth-Token': user?.token
+                    },
+                    body: JSON.stringify(object),
+                })
+            }
+
+        }
 
         props.history.push('/order/'+orderId);
 
 
     }
 
-
-    return (
-        <div className="addOrderAddress">
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="number">Number</label>
-                <input id="number" name="number" type="text"/>
-                <label htmlFor="name">Name on the card:</label>
-                <input id="name" name="name" type="text"/>
-                <label htmlFor="date">Expiration date:</label>
-                <input id="date" name="date" type="text"/>
-                <label htmlFor="code">Code</label>
-                <input id="code" name="code" type="text"/>
-                <button>Pay</button>
-            </form>
-        </div>
-    )
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else {
+        return (
+            <div className="addOrderAddress">
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="number">Number</label>
+                    <input id="number" name="number" type="text"/>
+                    <label htmlFor="name">Name on the card:</label>
+                    <input id="name" name="name" type="text"/>
+                    <label htmlFor="date">Expiration date:</label>
+                    <input id="date" name="date" type="text"/>
+                    <label htmlFor="code">Code</label>
+                    <input id="code" name="code" type="text"/>
+                    <button>Pay</button>
+                </form>
+            </div>
+        )
+    }
 
 
 

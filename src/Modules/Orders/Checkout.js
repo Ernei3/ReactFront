@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
+import {Redirect} from "react-router-dom";
 
 
 export default function Checkout(props){
@@ -16,42 +17,50 @@ export default function Checkout(props){
             let url1 = `http://localhost:9000/basketJson/${user.id}`
             const baskResponse = await fetch(url1, {
                 mode: 'cors',
-                headers:{
+                headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'http://localhost:3000',
+                    'X-Auth-Token': user?.token
                 },
                 method: 'GET',
             })
             let url2 = "http://localhost:9000/productsJson"
             const prodResponse = await fetch(url2, {
                 mode: 'cors',
-                headers:{
+                headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'http://localhost:3000',
+                    'X-Auth-Token': user?.token
                 },
                 method: 'GET',
             })
 
-            const baskJson = await baskResponse.json();
-            const prodJson = await prodResponse.json();
+            if (baskResponse.status >= 400 && baskResponse.status < 500) {
+                setUser(null);
+            }else {
+                const baskJson = await baskResponse.json();
+                const prodJson = await prodResponse.json();
 
-            let sum = 0;
-            baskJson.forEach(calcPrice);
+                let sum = 0;
+                baskJson.forEach(calcPrice);
 
-            function calcPrice(item) {
-                sum += item.quantity*prodJson.find( ({ id }) => id === item.product ).price;
+                function calcPrice(item) {
+                    sum += item.quantity * prodJson.find(({id}) => id === item.product).price;
+                }
+
+                setBasket(baskJson);
+                setProducts(prodJson);
+                setPriceSum(sum);
+
             }
 
-
-            setBasket(baskJson);
-            setProducts(prodJson);
-            setPriceSum(sum);
-
         }
-        fetchData();
-    }, [user.id]);
+        if(user){
+            fetchData();
+        }
+    }, [user]);
 
 
     async function handleClick() {
@@ -66,32 +75,46 @@ export default function Checkout(props){
         let url1 = `http://localhost:9000/addOrderJson`
         const ordResponse = await fetch(url1, {
             mode: 'cors',
-            headers:{
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
             },
             method: 'POST',
             body: JSON.stringify(object),
         })
-        const ordJson = await ordResponse.json()
 
-        let url2 = `http://localhost:9000/addToOrderJson`
+        if(ordResponse.status >= 400 && ordResponse.status < 500) {
+            setUser(null);
+        }else {
 
-        await fetch(url2, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-            },
-            method: 'POST',
-            body: JSON.stringify(ordJson),
-        }).then(props.history.push('/addAddress/'+ordJson.id));
+            const ordJson = await ordResponse.json()
+
+            let url2 = `http://localhost:9000/addToOrderJson`
+
+            await fetch(url2, {
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'X-Auth-Token': user?.token
+                },
+                method: 'POST',
+                body: JSON.stringify(ordJson),
+            }).then(response =>
+                response.status >= 400 ? setUser(null) : props.history.push('/addAddress/' + ordJson.id)
+            );
+        }
 
     }
 
-    if(priceSum > 0){
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else if(priceSum > 0){
         return (
             <div className="checkOut">
                 <div className="subtitle">Check Out</div>

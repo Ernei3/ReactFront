@@ -1,10 +1,11 @@
 import React, {useContext, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import {UserContext} from "../../providers/UserProvider";
 
 export default function AddAddress(props) {
 
     const { orderId } = useParams();
+    const {user, setUser} = useContext(UserContext);
 
     function handleSubmit(event) {
 
@@ -24,27 +25,40 @@ export default function AddAddress(props) {
 
         fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(object),
-        }).then(props.history.push('/addPayment/'+orderId))
+        }).then(response =>
+            response.status >= 400 ? setUser(null) : props.history.push('/addPayment/'+orderId)
+        );
+
 
     }
 
-
-    return (
-        <div className="addOrderAddress">
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="user">Country</label>
-                <input id="country" name="country" type="text"/>
-                <label htmlFor="city">City</label>
-                <input id="city" name="city" type="text"/>
-                <label htmlFor="street">Street</label>
-                <input id="street" name="street" type="text"/>
-                <label htmlFor="number">Number</label>
-                <input id="number" name="number" type="text"/>
-                <button>Send to this Address</button>
-            </form>
-        </div>
-    )
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else {
+        return (
+            <div className="addOrderAddress">
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="user">Country</label>
+                    <input id="country" name="country" type="text"/>
+                    <label htmlFor="city">City</label>
+                    <input id="city" name="city" type="text"/>
+                    <label htmlFor="street">Street</label>
+                    <input id="street" name="street" type="text"/>
+                    <label htmlFor="number">Number</label>
+                    <input id="number" name="number" type="text"/>
+                    <button>Send to this Address</button>
+                </form>
+            </div>
+        )
+    }
 
 }

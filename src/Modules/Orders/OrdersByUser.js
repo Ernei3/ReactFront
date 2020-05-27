@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
-import {useParams} from "react-router-dom";
+import {Redirect, useParams} from "react-router-dom";
 
 
 export default function OrdersByUser(){
@@ -14,39 +14,53 @@ export default function OrdersByUser(){
 
             let url = `http://localhost:9000/ordersJson/${user.id}`
 
-            fetch(url, {
+            const response = await fetch(url, {
                 mode: 'cors',
-                headers:{
+                headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'http://localhost:3000',
+                    'X-Auth-Token': user?.token
                 },
                 method: 'GET',
             })
-                .then(results => {
-                    return results.json();
-                }).then(data => {
-                setOrders(data)
-            })
+
+            if (response.status >= 400 && response.status < 500) {
+                setUser(null);
+            }else {
+                const resJson = await response.json();
+                setOrders(resJson);
+            }
+
+
 
         }
-        fetchData();
-    }, [user.id]);
+        if(user){
+            fetchData();
+        }
+    }, [user]);
 
-    return (
-        <div className="ordersByUser">
-            <div className="subtitle">Orders of user {user.firstName} {user.lastName}</div>
-            {orders.map((ord) => {
-                return (
-                    <div key={ord.id} className="singleOrder">
-                        <span className="orderId">{ord.id} </span>
-                        <span className="orderStatus">{ord.status} </span>
-                        <span className="orderDetails"><a href={'/order/'+ord.id}>Details</a> </span>
-                    </div>
-                )
-            })}
-        </div>
-    )
+
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else {
+        return (
+            <div className="ordersByUser">
+                <div className="subtitle">Orders of user {user.firstName} {user.lastName}</div>
+                {orders.map((ord) => {
+                    return (
+                        <div key={ord.id} className="singleOrder">
+                            <span className="orderId">{ord.id} </span>
+                            <span className="orderStatus">{ord.status} </span>
+                            <span className="orderDetails"><a href={'/order/' + ord.id}>Details</a> </span>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
 
 
 
