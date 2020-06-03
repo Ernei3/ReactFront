@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-export default function Auth() {
+export default function Oauth() {
     const { provider } = useParams();
 
     useEffect(() => {

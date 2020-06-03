@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import { Redirect } from "react-router-dom"
 
 
-export default function Checkout(props){
+export default function OrderDetails(){
 
     const { ordId } = useParams();
 
