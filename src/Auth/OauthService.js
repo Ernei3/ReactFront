@@ -28,3 +28,16 @@ export async function authenticate(provider, queryParams) {
             console.log(response);
         });
 }
+
+export function signOut(user) {
+    fetch(host + "api/signOut", {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'X-Auth-Token': user?.token
+        }
+    });
+}

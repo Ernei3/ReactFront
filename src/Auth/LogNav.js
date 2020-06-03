@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {UserContext} from '../providers/UserProvider';
 import SocialLoginButton from "./OathButton";
+import {signOut} from "./OauthService";
 
 
 export default function LogNav() {
@@ -9,6 +10,7 @@ export default function LogNav() {
 
 
     function handleLogOut(){
+        signOut(user);
         setUser(undefined);
     }
 
