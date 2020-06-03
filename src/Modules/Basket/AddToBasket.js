@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Redirect, useParams} from 'react-router-dom'
 import {UserContext} from "../../providers/UserProvider";
 
-export default function AddBasketlist(props){
+export default function AddToBasket(props){
     const {user, setUser} = useContext(UserContext);
     const { prodId } = useParams();
 

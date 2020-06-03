@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {UserContext} from "../../providers/UserProvider";
-import {Redirect, useParams} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 
 export default function OrdersByUser(){

@@ -20,7 +20,6 @@ export async function authenticate(provider, queryParams) {
             return response.json();
         })
         .then((fetchedUser) => {
-            console.log(fetchedUser);
             return fetchedUser;
         })
         .catch(function (response) {

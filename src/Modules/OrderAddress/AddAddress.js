@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Redirect, useParams} from 'react-router-dom';
 import {UserContext} from "../../providers/UserProvider";
 
