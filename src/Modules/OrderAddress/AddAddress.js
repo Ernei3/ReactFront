@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom'
+import React, {useContext, useEffect} from 'react';
+import {Redirect, useParams} from 'react-router-dom';
+import {UserContext} from "../../providers/UserProvider";
 
-class AddAddress extends Component {
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+export default function AddAddress(props) {
 
-    handleSubmit(event) {
+    const { orderId } = useParams();
+    const {user, setUser} = useContext(UserContext);
 
-        const { orderId } = this.props.match.params;
+    function handleSubmit(event) {
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -27,18 +25,28 @@ class AddAddress extends Component {
 
         fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'X-Auth-Token': user?.token
+            },
             body: JSON.stringify(object),
-        }).then(this.props.history.push('/addPayment/'+orderId))
+        }).then(response =>
+            response.status >= 400 ? setUser(null) : props.history.push('/addPayment/'+orderId)
+        );
 
 
     }
 
-    render() {
-
+    if(user === undefined || user === null) {
+        return (
+            <Redirect to='/logIn'/>
+        )
+    }else {
         return (
             <div className="addOrderAddress">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="user">Country</label>
                     <input id="country" name="country" type="text"/>
                     <label htmlFor="city">City</label>
@@ -52,6 +60,5 @@ class AddAddress extends Component {
             </div>
         )
     }
-}
 
-export default withRouter(AddAddress);
+}
