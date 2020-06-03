@@ -7,8 +7,6 @@ import {signOut} from "./OauthService";
 export default function LogNav() {
     const {user, setUser} = useContext(UserContext);
 
-
-
     function handleLogOut(){
         signOut(user);
         setUser(undefined);
