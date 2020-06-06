@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Redirect, useParams} from 'react-router-dom';
 import {UserContext} from "../../providers/UserProvider";
 
@@ -14,70 +14,80 @@ export default function AddPayment(props) {
 
         let url1 = `http://localhost:9000/orderDetailsJson/${orderId}`;
 
-        const ordResponse = await fetch(url1, {
-            mode: 'cors',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-                'X-Auth-Token': user?.token
-            },
-            method: 'GET',
-        })
+        let numberPattern = /\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d/;
+        let datePattern = /([0-9]|10|11|12)\u002F\d\d/;
 
-        if (ordResponse.status >= 400 && ordResponse.status < 500) {
-            setUser(null);
-        }else {
-
-            const ordJson = await ordResponse.json();
-            ordJson.status = "Accepted";
-
-            let url2 = `http://localhost:9000/updateOrderJson`;
-
-            const updateResponse = await fetch(url2, {
-                method: 'PUT',
-                headers: {
+        if( !numberPattern.test(data.get('number').toString())){
+            alert("Your card number should have 16 digits.")
+        }else if( !datePattern.test(data.get('date').toString()) ){
+            alert("Wrong date format.")
+        }
+        else{
+            const ordResponse = await fetch(url1, {
+                mode: 'cors',
+                headers:{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'Access-Control-Allow-Origin':'http://localhost:3000',
                     'X-Auth-Token': user?.token
                 },
-                body: JSON.stringify(ordJson),
+                method: 'GET',
             })
 
-            if (updateResponse.status >= 400 && updateResponse.status < 500) {
+            if (ordResponse.status >= 400 && ordResponse.status < 500) {
                 setUser(null);
             }else {
 
-                let object = {
-                    "id": Number(0),
-                    "number": data.get('number'),
-                    "name": data.get('name'),
-                    "date": data.get('date'),
-                    "code": data.get('code'),
-                    "order": Number(orderId)
-                };
+                const ordJson = await ordResponse.json();
+                ordJson.status = "Accepted";
 
-                let url3 = `http://localhost:9000/sendPaymentJson`;
+                let url2 = `http://localhost:9000/updateOrderJson`;
 
-                await fetch(url3, {
-                    method: 'POST',
+                const updateResponse = await fetch(url2, {
+                    method: 'PUT',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': 'http://localhost:3000',
                         'X-Auth-Token': user?.token
                     },
-                    body: JSON.stringify(object),
+                    body: JSON.stringify(ordJson),
                 })
+
+                if (updateResponse.status >= 400 && updateResponse.status < 500) {
+                    setUser(null);
+                }else {
+
+                    let object = {
+                        "id": Number(0),
+                        "number": data.get('number'),
+                        "name": data.get('name'),
+                        "date": data.get('date'),
+                        "code": data.get('code'),
+                        "order": Number(orderId)
+                    };
+
+                    let url3 = `http://localhost:9000/sendPaymentJson`;
+
+                    await fetch(url3, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:3000',
+                            'X-Auth-Token': user?.token
+                        },
+                        body: JSON.stringify(object),
+                    })
+                }
+
             }
 
+            props.history.push('/order/'+orderId);
         }
 
-        props.history.push('/order/'+orderId);
-
-
     }
+
 
     if(user === undefined || user === null) {
         return (
