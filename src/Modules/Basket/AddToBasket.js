@@ -18,7 +18,6 @@ export default function AddToBasket(props){
             "product": Number(data.get('product'))
         };
 
-
         let url = `http://localhost:9000/addToBasketJson`;
 
         fetch(url, {
@@ -33,8 +32,6 @@ export default function AddToBasket(props){
         }).then(response =>
             response.status >= 400 ? setUser(null) : props.history.push('/basket/')
         );
-
-
     }
 
     if(user === undefined || user === null){
@@ -55,5 +52,4 @@ export default function AddToBasket(props){
             </div>
         )
     }
-
 }
