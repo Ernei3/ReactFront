@@ -18,9 +18,7 @@ export default function AddToWishlist(props){
             "product": Number(data.get('product'))
         };
 
-
         let url = `http://localhost:9000/addToWishlistJson`;
-
         fetch(url, {
             method: 'POST',
             headers:{
@@ -33,10 +31,7 @@ export default function AddToWishlist(props){
         }).then(response =>
             response.status >= 400 ? setUser(null) : props.history.push('/wishlist/')
         );
-
-
     }
-
 
     if(user === undefined || user === null){
         return(
@@ -56,7 +51,4 @@ export default function AddToWishlist(props){
             </div>
         )
     }
-
-
-
 }
