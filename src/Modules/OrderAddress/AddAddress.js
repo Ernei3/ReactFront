@@ -20,22 +20,29 @@ export default function AddAddress(props) {
             "number": data.get('number')
         };
 
+        let numberPattern = /\d+[abcdefghijkl]?(\u002F\d+)?/;
 
-        let url = `http://localhost:9000/addAddressJson/${orderId}`;
+        if( !numberPattern.test(data.get('number').toString())){
+            alert("Your home or flat address is invalid")
+        }
+        else {
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-                'X-Auth-Token': user?.token
-            },
-            body: JSON.stringify(object),
-        }).then(response =>
-            response.status >= 400 ? setUser(null) : props.history.push('/addPayment/'+orderId)
-        );
 
+            let url = `http://localhost:9000/addAddressJson/${orderId}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'X-Auth-Token': user?.token
+                },
+                body: JSON.stringify(object),
+            }).then(response =>
+                response.status >= 400 ? setUser(null) : props.history.push('/addPayment/' + orderId)
+            );
+        }
 
     }
 
